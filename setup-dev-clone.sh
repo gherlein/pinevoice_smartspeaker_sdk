@@ -92,7 +92,7 @@ for entry in "${FORKED_SUBMODULES[@]}"; do
   path="${entry%%:*}"
   repo="${entry##*:}"
   sub_dir="$TARGET_DIR/$path"
-  [ -d "$sub_dir/.git" ] || { warn "submodule '$path' not initialized; skipping"; continue; }
+  [ -e "$sub_dir/.git" ] || { warn "submodule '$path' not initialized; skipping"; continue; }
 
   info "Configuring submodule '$path'"
   # origin already resolves to your fork via the relative .gitmodules URL.
@@ -106,7 +106,7 @@ info "Fetching upstream refs"
 git -C "$TARGET_DIR" fetch upstream || warn "could not fetch superproject upstream"
 for entry in "${FORKED_SUBMODULES[@]}"; do
   sub_dir="$TARGET_DIR/${entry%%:*}"
-  [ -d "$sub_dir/.git" ] && { git -C "$sub_dir" fetch upstream || warn "could not fetch upstream for ${entry%%:*}"; }
+  [ -e "$sub_dir/.git" ] && { git -C "$sub_dir" fetch upstream || warn "could not fetch upstream for ${entry%%:*}"; }
 done
 
 # ---- Summary ---------------------------------------------------------------
@@ -117,7 +117,7 @@ echo "superproject ($TARGET_DIR):"
 git -C "$TARGET_DIR" remote -v | sed 's/^/  /'
 for entry in "${FORKED_SUBMODULES[@]}"; do
   sub_dir="$TARGET_DIR/${entry%%:*}"
-  [ -d "$sub_dir/.git" ] || continue
+  [ -e "$sub_dir/.git" ] || continue
   echo
   echo "submodule (${entry%%:*}):"
   git -C "$sub_dir" remote -v | sed 's/^/  /'
