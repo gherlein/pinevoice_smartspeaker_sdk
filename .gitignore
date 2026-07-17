@@ -24,3 +24,13 @@ boards/bl606p_evb_c906c/*
 boards/bl606p_evb_e907c/*
 boards/bl606p_trv03_e907c/*
 firmware_*.zip
+.env
+.envrc
+*~
+bin/
+.llm/
+.env
+.envrc
+*~
+bin/
+.llm/
